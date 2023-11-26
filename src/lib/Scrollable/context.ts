@@ -1,4 +1,4 @@
-import { derived, type Readable } from 'svelte/store';
+import { type Readable } from 'svelte/store';
 import { getContext, setContext } from 'svelte';
 
 export function setScrollableContainerRef(ref: Readable<HTMLElement>): void {
@@ -23,4 +23,28 @@ export function setItemRefsVisibility(ref: Readable<boolean[]>): void {
 
 export function getItemRefsVisibility(): Readable<boolean[]> {
     return getContext('itemRefsVisibility');
+}
+
+export function setActiveItem(ref: Readable<boolean[]>): void {
+    setContext('activeItem', ref);
+}
+
+export function getActiveItem(): Readable<boolean[]> {
+    return getContext('activeItem');
+}
+
+export function setLeftArrowClick(fn: () => void): void {
+    setContext('leftArrowClick', fn);
+}
+
+export function getLeftArrowClick(): () => void {
+    return getContext('leftArrowClick');
+}
+
+export function setRightArrowClick(fn: () => void): void {
+    setContext('rightArrowClick', fn);
+}
+
+export function getRightArrowClick(): () => void {
+    return getContext('rightArrowClick');
 }

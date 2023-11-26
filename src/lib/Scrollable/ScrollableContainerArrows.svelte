@@ -1,51 +1,29 @@
 <script lang="ts">
-    import { getItemRefs, getItemRefsVisibility } from './context';
+    import {
+        getItemRefsVisibility,
+        getLeftArrowClick,
+        getRightArrowClick,
+    } from './context';
     import { derived } from 'svelte/store';
     import { firstItem, lastItem } from '../../utils/array';
 
-    const itemRefs = getItemRefs();
-    const itemRefsVisibility = getItemRefsVisibility();
-
-    let isLeftArrowVisible = derived(
-        itemRefsVisibility,
+    const clickLeftFn = getLeftArrowClick();
+    const clickRightFn = getRightArrowClick();
+    const isLeftArrowVisible = derived(
+        getItemRefsVisibility(),
         (visibility) => !firstItem(visibility)
     );
-    let isRightArrowVisible = derived(
-        itemRefsVisibility,
+    const isRightArrowVisible = derived(
+        getItemRefsVisibility(),
         (visibility) => !lastItem(visibility)
     );
 
     function handleClickLeft(): void {
-        scrollToInvisibleElement('left');
+        clickLeftFn();
     }
 
     function handleClickRight(): void {
-        scrollToInvisibleElement('right');
-    }
-
-    function scrollToInvisibleElement(direction: 'left' | 'right'): void {
-        const firstIndex = 0;
-        const lastIndex = $itemRefsVisibility.length - 1;
-        const indexOfVisibleElement =
-            direction === 'left'
-                ? $itemRefsVisibility.findIndex(Boolean)
-                : $itemRefsVisibility.findLastIndex(Boolean);
-
-        if ([firstIndex, lastIndex].includes(indexOfVisibleElement)) {
-            return;
-        }
-
-        const index =
-            direction === 'left'
-                ? indexOfVisibleElement - 1
-                : indexOfVisibleElement + 1;
-        const element = $itemRefs[index];
-
-        element.scrollIntoView({
-            behavior: 'smooth',
-            inline: 'nearest',
-            block: 'nearest',
-        });
+        clickRightFn();
     }
 </script>
 
