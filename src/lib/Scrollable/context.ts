@@ -1,4 +1,4 @@
-import { type Readable } from 'svelte/store';
+import { derived, type Readable } from 'svelte/store';
 import { getContext, setContext } from 'svelte';
 
 export function setScrollableContainerRef(ref: Readable<HTMLElement>): void {

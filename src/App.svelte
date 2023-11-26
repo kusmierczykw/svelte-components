@@ -26,6 +26,30 @@
             label: 'Sekcja szósta',
             anchorId: '6',
         },
+        {
+            label: 'Sekcja pierwsza',
+            anchorId: '7',
+        },
+        {
+            label: 'Sekcja druga',
+            anchorId: '8',
+        },
+        {
+            label: 'Sekcja trzecia',
+            anchorId: '9',
+        },
+        {
+            label: 'Sekcja czwarta ',
+            anchorId: '10',
+        },
+        {
+            label: 'Sekcja piąta',
+            anchorId: '11',
+        },
+        {
+            label: 'Sekcja szósta',
+            anchorId: '12',
+        },
     ];
 </script>
 

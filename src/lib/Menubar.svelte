@@ -20,10 +20,10 @@
     setItemRefsVisibility(itemRefsVisibility);
 </script>
 
-<div style="width: 400px">
+<div style="width: 1200px">
     <ScrollableContainer
         bind:scrollableContainerRef={$scrollableContainerRef}
-        arrows={true}
+        showArrows={true}
     >
         {#each items as item, index}
             <ScrollableContainerItem

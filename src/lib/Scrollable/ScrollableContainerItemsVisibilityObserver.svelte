@@ -3,16 +3,19 @@
     import { createEventDispatcher, onMount } from 'svelte';
     import { derived } from 'svelte/store';
 
+    const itemsRef = getItemRefs();
+    const scrollableContainerRef = getScrollableContainerRef();
+
     const dispatch = createEventDispatcher();
     const observer = derived(
-        [getItemRefs(), getScrollableContainerRef()],
-        ([itemRefs, scrollableContainerRef], set) => {
-            const visibility = itemRefs.map(() => false);
+        [itemsRef, scrollableContainerRef],
+        ([$itemRefs, $scrollableContainerRef], set) => {
+            const visibility = $itemRefs.map(() => false);
             const observer = new IntersectionObserver(
                 (entries) => {
                     entries.forEach((entry) => {
                         const { target, isIntersecting: visible } = entry;
-                        const index = itemRefs.indexOf(target as HTMLElement);
+                        const index = $itemRefs.indexOf(target as HTMLElement);
                         const shouldUpdate = visibility[index] !== visible;
 
                         if (!shouldUpdate) {
@@ -23,10 +26,10 @@
                         set(visibility);
                     });
                 },
-                { root: scrollableContainerRef, threshold: 0.98 }
+                { root: $scrollableContainerRef, threshold: 0.98 }
             );
 
-            itemRefs.forEach((item) => observer.observe(item));
+            $itemRefs.forEach((item) => observer.observe(item));
 
             return () => observer.disconnect();
         },

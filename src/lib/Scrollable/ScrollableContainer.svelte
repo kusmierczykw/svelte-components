@@ -1,25 +1,33 @@
 <script lang="ts">
     import ScrollableContainerArrows from './ScrollableContainerArrows.svelte';
 
-    export let arrows = true;
     export let scrollableContainerRef: HTMLElement;
+    export let showArrows = true;
+
+    let arrows = false;
+
+    const handleMouseEnter = (): void => (arrows = true);
+
+    const handleMouseLeave = (): void => (arrows = false);
 </script>
 
-<div class="scrollable-container">
-    <div class="scrollable-area" bind:this={scrollableContainerRef}>
+<div
+    on:mouseenter={handleMouseEnter}
+    on:mouseleave={handleMouseLeave}
+    class="scrollable-container"
+>
+    <div bind:this={scrollableContainerRef} class="scrollable-area">
         <slot />
     </div>
 
-    <ScrollableContainerArrows {arrows} />
+    {#if showArrows && arrows}
+        <ScrollableContainerArrows />
+    {/if}
 </div>
 
 <style lang="scss">
     .scrollable-container {
         position: relative;
-
-        &:hover :global(.scroll-arrow-button) {
-            opacity: 0.9;
-        }
     }
 
     .scrollable-area {
