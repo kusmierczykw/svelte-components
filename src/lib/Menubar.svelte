@@ -20,6 +20,13 @@
     const itemRefsVisibility = writable<boolean[]>([]);
     const activeItem = writable<HTMLElement>();
 
+    function handleActiveItemChange(event: CustomEvent<HTMLElement>): void {
+        const { detail } = event;
+
+        $activeItem = detail;
+        scrollToElement($activeItem);
+    }
+
     function scrollToInvisibleElement(direction: 'left' | 'right'): void {
         const firstIndex = 0;
         const lastIndex = $itemRefsVisibility.length - 1;
@@ -38,13 +45,21 @@
                 : indexOfVisibleElement + 1;
         const element = $itemRefs[index];
 
-        scrollToElement(element);
+        scrollSmoothToElement(element);
     }
 
     function scrollToElement(element: Element): void {
         element.scrollIntoView({
             inline: 'nearest',
             block: 'nearest',
+        });
+    }
+
+    function scrollSmoothToElement(element: Element): void {
+        element.scrollIntoView({
+            inline: 'nearest',
+            block: 'nearest',
+            behavior: 'smooth',
         });
     }
 
@@ -77,7 +92,7 @@
     />
 
     <ScrollableContainerActiveItemObserver
-        on:activeItemChange={({ detail }) => ($activeItem = detail)}
+        on:activeItemChange={handleActiveItemChange}
     />
 </div>
 
